@@ -6,6 +6,8 @@ class GoogleMap
                 :center,
                 :inject_on_load,
                 :zoom,
+                :min_zoom,
+                :max_zoom,
                 :api_key,
                 :javascript_framework
 
@@ -157,7 +159,11 @@ class GoogleMap
     js << "    }"
     js << "  }"
     js << "  if (!center) { center = bounds.getCenter(); }"
-    js << "  if (!zoom) { zoom = #{dom_id}.getBoundsZoomLevel(bounds); }"
+    js << "  if (!zoom) {"
+    js << "    zoom = #{dom_id}.getBoundsZoomLevel(bounds);"
+    js << "    if (zoom < #{min_zoom}) { zoom = #{min_zoom}; }" if min_zoom
+    js << "    if (zoom > #{max_zoom}) { zoom = #{max_zoom}; }" if max_zoom
+    js << "  }"
 
     js << "  #{dom_id}.checkResize();"
     js << "  #{dom_id}.setCenter(center, zoom);"
