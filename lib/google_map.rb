@@ -152,7 +152,7 @@ class GoogleMap
     js << "function centerzoom_#{dom_id}(center, zoom) {"
 
     # Calculate the bounds of the markers
-    js << "  if (!center && !zoom) {"
+    js << "  if (!center || !zoom) {"
     js << "    var bounds = new GLatLngBounds();"
     js << "    for(marker in #{dom_id}_markers) {"
     js << "      bounds.extend(#{dom_id}_markers[marker].getLatLng());"
